@@ -1,0 +1,6 @@
+@UtilitiesPortal.Api_HostAddress = http://localhost:5245
+
+GET {{UtilitiesPortal.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

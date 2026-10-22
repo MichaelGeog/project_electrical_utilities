@@ -22,6 +22,13 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddDbContext<UtilitiesPortalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UtilitiesPortal")));
 
+// Billing settings (rate and due days), checked when the app starts
+builder.Services.AddOptions<BillingOptions>()
+    .Bind(builder.Configuration.GetSection("Billing"))
+    .Validate(o => o.RatePerKwh >= 0 && o.RatePerKwh <= 9999.9999m && o.DueDays >= 0,
+        "Billing settings are invalid: RatePerKwh must be between 0 and 9999.9999 and DueDays must not be negative.")
+    .ValidateOnStart();
+
 // Login tokens (JWT)
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
@@ -60,6 +67,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMeterService, MeterService>();
 builder.Services.AddScoped<IReadingService, ReadingService>();
+builder.Services.AddScoped<IBillingService, BillingService>();
 
 var app = builder.Build();
 

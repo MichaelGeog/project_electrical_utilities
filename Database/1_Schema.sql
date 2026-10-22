@@ -269,4 +269,3 @@ FROM data.Bills AS b
 JOIN data.Meters AS m    ON m.Id = b.MeterId
 JOIN data.Customers AS c ON c.Id = m.CustomerId;
 GO
-

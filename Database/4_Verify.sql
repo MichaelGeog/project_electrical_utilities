@@ -13,7 +13,7 @@ GO
 /* ---------- 2. Trigger blocks a lower reading ----------
    EXPECTED: error 50001
    "Meter reading cannot be lower than an earlier reading for the same meter."
-   Nothing is inserted. */
+   Nothing is inserted. */	
 INSERT INTO api.vw_MeterReadings (Id, MeterId, ReadingDate, KwhReading)
 SELECT NEWID(), Id, '2026-10-15', 100.00
 FROM data.Meters WHERE MeterNumber = 'M-1001';

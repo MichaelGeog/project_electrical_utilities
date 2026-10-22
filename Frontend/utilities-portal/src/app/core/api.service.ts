@@ -3,7 +3,17 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Meter } from './auth.models';
-import { Bill, CreateReadingRequest, GenerateBillRequest, Reading } from './api.models';
+import {
+  Bill,
+  CreateCustomerRequest,
+  CreateMeterRequest,
+  CreateReadingRequest,
+  Customer,
+  GenerateBillRequest,
+  Reading,
+  UpdateCustomerRequest,
+  UpdateMeterRequest,
+} from './api.models';
 
 /** Every call to the Web API lives here, so the pages never build URLs themselves. */
 @Injectable({ providedIn: 'root' })
@@ -18,6 +28,14 @@ export class ApiService {
 
   allMeters(): Observable<Meter[]> {
     return this.http.get<Meter[]>(`${this.base}/meters`);
+  }
+
+  createMeter(request: CreateMeterRequest): Observable<Meter> {
+    return this.http.post<Meter>(`${this.base}/meters`, request);
+  }
+
+  updateMeter(meterId: string, request: UpdateMeterRequest): Observable<Meter> {
+    return this.http.put<Meter>(`${this.base}/meters/${meterId}`, request);
   }
 
   readings(meterId: string): Observable<Reading[]> {
@@ -43,5 +61,22 @@ export class ApiService {
 
   generateBill(request: GenerateBillRequest): Observable<Bill> {
     return this.http.post<Bill>(`${this.base}/bills/generate`, request);
+  }
+
+  // Customers (admin)
+  customers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.base}/customers`);
+  }
+
+  createCustomer(request: CreateCustomerRequest): Observable<Customer> {
+    return this.http.post<Customer>(`${this.base}/customers`, request);
+  }
+
+  updateCustomer(customerId: string, request: UpdateCustomerRequest): Observable<Customer> {
+    return this.http.put<Customer>(`${this.base}/customers/${customerId}`, request);
+  }
+
+  setCustomerActive(customerId: string, isActive: boolean): Observable<Customer> {
+    return this.http.put<Customer>(`${this.base}/customers/${customerId}/active`, { isActive });
   }
 }

@@ -4,7 +4,7 @@ body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, san
 h2 { margin: 0 0 12px; }
 a { color: #1f5fbf; }
 
-.page { max-width: 1000px; margin: 0 auto; padding: 16px; }
+.page { max-width: 1280px; margin: 0 auto; padding: 16px; }
 .card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,.08); margin-bottom: 16px; }
 .muted { color: #667; }
 .error { color: #b3261e; }
@@ -12,13 +12,18 @@ a { color: #1f5fbf; }
 
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #e3e7ee; white-space: nowrap; }
+th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid #e3e7ee; white-space: nowrap; }
 th { font-size: .85rem; color: #556; }
 td.num, th.num { text-align: right; }
 
 form.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
-.field { display: flex; flex-direction: column; gap: 4px; min-width: 170px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 170px; position: relative; padding-bottom: 1.3em; }
 .field label { font-weight: 600; font-size: .9rem; }
+/* The error text sits in the reserved space under the input, so a message appearing or
+   disappearing never changes the height of the field or moves the buttons. */
+.field small.error { position: absolute; left: 0; bottom: 0; font-size: .8rem; line-height: 1.2; }
+/* Buttons in a form row line up with the inputs, not with the reserved error space. */
+form.row > button, .row > button { margin-bottom: 1.3em; }
 input, select { padding: 9px; border: 1px solid #c5ccd6; border-radius: 6px; font-size: 1rem; background: #fff; }
 button.primary { padding: 10px 16px; border: 0; border-radius: 6px; background: #1f5fbf; color: #fff; font-size: 1rem; cursor: pointer; }
 button.primary:disabled { opacity: .6; cursor: default; }

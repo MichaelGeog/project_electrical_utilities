@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard, roleGuard } from './core/guards';
 import { Shell } from './layout/shell';
 import { AdminBills } from './pages/admin-bills/admin-bills';
+import { AdminCustomers } from './pages/admin-customers/admin-customers';
 import { AdminHome } from './pages/admin-home/admin-home';
 import { AdminReadings } from './pages/admin-readings/admin-readings';
 import { CustomerBills } from './pages/customer-bills/customer-bills';
@@ -23,6 +24,7 @@ export const routes: Routes = [
       { path: 'bills', component: CustomerBills, canActivate: [roleGuard('Customer')] },
 
       { path: 'admin', component: AdminHome, canActivate: [roleGuard('Admin')] },
+      { path: 'admin/customers', component: AdminCustomers, canActivate: [roleGuard('Admin')] },
       { path: 'admin/readings', component: AdminReadings, canActivate: [roleGuard('Admin')] },
       { path: 'admin/bills', component: AdminBills, canActivate: [roleGuard('Admin')] },
     ],

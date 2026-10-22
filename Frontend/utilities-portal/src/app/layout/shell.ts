@@ -13,6 +13,7 @@ import { AuthService } from '../core/auth.service';
       <nav>
         @if (auth.role() === 'Admin') {
           <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Meters</a>
+          <a routerLink="/admin/customers" routerLinkActive="active">Customers</a>
           <a routerLink="/admin/readings" routerLinkActive="active">Readings</a>
           <a routerLink="/admin/bills" routerLinkActive="active">Bills</a>
         } @else {
@@ -30,7 +31,7 @@ import { AuthService } from '../core/auth.service';
   styles: `
     .bar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; padding: 12px 16px; background: #1f5fbf; color: #fff; }
     .bar.admin { background: #2b2f3a; }
-    nav { display: flex; gap: 14px; }
+    nav { display: flex; flex-wrap: wrap; gap: 14px; }
     nav a { color: #fff; text-decoration: none; opacity: .8; padding-bottom: 2px; }
     nav a.active { opacity: 1; border-bottom: 2px solid #fff; }
     .who { margin-left: auto; font-size: .9rem; }

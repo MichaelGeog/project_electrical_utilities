@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UtilitiesPortal.Api.Auth;
 using UtilitiesPortal.Api.Data;
+using UtilitiesPortal.Api.Errors;
 using UtilitiesPortal.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Errors: exceptions become clean JSON responses (see Errors/GlobalExceptionHandler.cs)
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // Database (connection string comes from user secrets locally, App Service settings on Azure)
 builder.Services.AddDbContext<UtilitiesPortalContext>(options =>
@@ -54,10 +58,15 @@ builder.Services.AddAuthorization();
 // Our own services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMeterService, MeterService>();
+builder.Services.AddScoped<IReadingService, ReadingService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseExceptionHandler(); // first, so it can catch errors from everything below
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

@@ -74,6 +74,8 @@ builder.Services.AddScoped<IMeterService, MeterService>();
 builder.Services.AddScoped<IReadingService, ReadingService>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+builder.Services.AddScoped<IOutageService, OutageService>();
 
 var app = builder.Build();
 

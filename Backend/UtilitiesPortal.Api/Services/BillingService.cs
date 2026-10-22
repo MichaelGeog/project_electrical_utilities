@@ -17,6 +17,12 @@ public interface IBillingService
 
     /// <summary>All bills (admin), optionally only Paid or only Unpaid.</summary>
     Task<List<BillDto>> GetAllBillsAsync(string? status);
+
+    /// <summary>
+    /// Marks a bill as paid (simulated: no real payment happens). A customer can only pay
+    /// their own bills; an admin can mark any bill.
+    /// </summary>
+    Task<BillDto> PayAsync(Guid billId, Guid? customerId, bool isAdmin);
 }
 
 public class BillingService : IBillingService
@@ -146,6 +152,35 @@ public class BillingService : IBillingService
             .ToListAsync();
 
         return summaries.Select(ToDto).ToList();
+    }
+
+    public async Task<BillDto> PayAsync(Guid billId, Guid? customerId, bool isAdmin)
+    {
+        var summary = await _db.CustomerBillSummaries
+            .AsNoTracking()
+            .FirstOrDefaultAsync(b => b.BillId == billId);
+
+        // Someone else's bill gets the same 404 as a bill that doesn't exist.
+        if (summary is null || (!isAdmin && summary.CustomerId != customerId))
+        {
+            throw new NotFoundException("Bill not found.");
+        }
+
+        if (summary.Status == "Paid")
+        {
+            throw new ConflictException("This bill is already paid.");
+        }
+
+        var bill = await _db.Bills.FirstAsync(b => b.Id == billId);
+        bill.Status = "Paid";
+        bill.PaidDate = DateOnly.FromDateTime(DateTime.UtcNow); // the database requires Paid bills to have a date
+        await _db.SaveChangesAsync();
+
+        var updated = await _db.CustomerBillSummaries
+            .AsNoTracking()
+            .FirstAsync(b => b.BillId == billId);
+
+        return ToDto(updated);
     }
 
     /// <summary>The latest reading of a meter taken on a given calendar day (UTC), or null.</summary>

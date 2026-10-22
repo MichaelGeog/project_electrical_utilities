@@ -49,7 +49,6 @@ public class AuthController : ControllerBase
         });
     }
 
-    // GET api/auth/admin-only : TEMPORARY, proves the Admin role check works. Delete it later.
     [HttpGet("admin-only")]
     [Authorize(Roles = "Admin")]
     public IActionResult AdminOnly()

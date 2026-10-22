@@ -48,4 +48,13 @@ public class BillsController : ControllerBase
         var bill = await _bills.GenerateAsync(request);
         return StatusCode(StatusCodes.Status201Created, bill);
     }
+
+    // POST api/bills/{billId}/pay : mark a bill as paid (simulated). A customer pays their own
+    // bills; an admin can mark any bill.
+    [HttpPost("{billId:guid}/pay")]
+    public async Task<ActionResult<BillDto>> Pay(Guid billId)
+    {
+        var bill = await _bills.PayAsync(billId, User.GetCustomerId(), User.IsAdmin());
+        return Ok(bill);
+    }
 }

@@ -1,4 +1,3 @@
-// Production build. Replace the URL with your Azure App Service address when you deploy.
 export const environment = {
-  apiUrl: 'https://YOUR-API-NAME.azurewebsites.net/api',
+   apiUrl: 'https://utilities-portal-api-michael-f7cbasepc6deeka6.centralus-01.azurewebsites.net/api',
 };

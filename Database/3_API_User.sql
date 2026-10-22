@@ -9,7 +9,7 @@
 USE master;
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = N'utilities_api')
-    CREATE LOGIN utilities_api WITH PASSWORD = N'ANYTHING_Strong#Password1';
+    CREATE LOGIN utilities_api WITH PASSWORD = N'CHANGE_ME_Strong#Password1';
 GO
 
 USE UtilitiesPortal;

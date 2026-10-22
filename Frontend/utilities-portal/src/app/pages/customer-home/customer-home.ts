@@ -32,7 +32,8 @@ import { Meter } from '../../core/auth.models';
                 none yet
               }
             </p>
-            <a [routerLink]="['/usage', m.meterId]">View usage history</a>
+
+            <p><a [routerLink]="['/usage', m.meterId]">View usage history</a></p>
           </section>
         }
       }

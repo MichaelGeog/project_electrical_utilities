@@ -71,7 +71,7 @@ import { Meter } from '../../core/auth.models';
             <thead>
               <tr>
                 <th>Customer</th><th>Meter</th><th>Period</th><th class="num">Used (kWh)</th>
-                <th class="num">Amount</th><th>Due</th><th>Status</th>
+                <th class="num">Amount</th><th>Due</th><th>Status</th><th></th>
               </tr>
             </thead>
             <tbody>
@@ -87,6 +87,11 @@ import { Meter } from '../../core/auth.models';
                     <span class="badge" [class.paid]="b.status === 'Paid'" [class.unpaid]="b.status === 'Unpaid'">
                       {{ b.status }}
                     </span>
+                  </td>
+                  <td>
+                    @if (b.status === 'Unpaid') {
+                      <button type="button" (click)="markPaid(b)">Mark paid</button>
+                    }
                   </td>
                 </tr>
               }
@@ -148,6 +153,20 @@ export class AdminBills {
         this.saving.set(false);
         this.show(errorText(e, 'Could not generate the bill.'), true);
       },
+    });
+  }
+
+  protected markPaid(bill: Bill): void {
+    if (!confirm(`Mark the ${bill.meterNumber} bill for ${bill.customerName} as paid?`)) {
+      return;
+    }
+
+    this.api.payBill(bill.billId).subscribe({
+      next: (paid) => {
+        this.show(`Marked paid: ${paid.customerName}, ${paid.meterNumber}.`, false);
+        this.loadBills();
+      },
+      error: (e) => this.show(errorText(e, 'Could not mark the bill as paid.'), true),
     });
   }
 

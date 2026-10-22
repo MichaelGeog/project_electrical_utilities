@@ -16,9 +16,11 @@ import { AuthService } from '../core/auth.service';
           <a routerLink="/admin/customers" routerLinkActive="active">Customers</a>
           <a routerLink="/admin/readings" routerLinkActive="active">Readings</a>
           <a routerLink="/admin/bills" routerLinkActive="active">Bills</a>
+          <a routerLink="/admin/requests" routerLinkActive="active">Requests</a>
         } @else {
           <a routerLink="/dashboard" routerLinkActive="active">My meters</a>
           <a routerLink="/bills" routerLinkActive="active">My bills</a>
+          <a routerLink="/requests" routerLinkActive="active">Support</a>
         }
       </nav>
 

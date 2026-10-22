@@ -8,9 +8,12 @@ import {
   CreateCustomerRequest,
   CreateMeterRequest,
   CreateReadingRequest,
+  CreateServiceRequest,
   Customer,
   GenerateBillRequest,
+  Outage,
   Reading,
+  ServiceRequest,
   UpdateCustomerRequest,
   UpdateMeterRequest,
 } from './api.models';
@@ -78,5 +81,35 @@ export class ApiService {
 
   setCustomerActive(customerId: string, isActive: boolean): Observable<Customer> {
     return this.http.put<Customer>(`${this.base}/customers/${customerId}/active`, { isActive });
+  }
+
+  payBill(billId: string): Observable<Bill> {
+    return this.http.post<Bill>(`${this.base}/bills/${billId}/pay`, {});
+  }
+
+  // Service requests
+  myRequests(): Observable<ServiceRequest[]> {
+    return this.http.get<ServiceRequest[]>(`${this.base}/service-requests/my`);
+  }
+
+  createRequest(request: CreateServiceRequest): Observable<ServiceRequest> {
+    return this.http.post<ServiceRequest>(`${this.base}/service-requests`, request);
+  }
+
+  allRequests(status: string): Observable<ServiceRequest[]> {
+    let params = new HttpParams();
+    if (status) {
+      params = params.set('status', status);
+    }
+    return this.http.get<ServiceRequest[]>(`${this.base}/service-requests`, { params });
+  }
+
+  updateRequestStatus(requestId: string, status: string): Observable<ServiceRequest> {
+    return this.http.put<ServiceRequest>(`${this.base}/service-requests/${requestId}/status`, { status });
+  }
+
+  // Outage panel (simulated data)
+  outages(): Observable<Outage[]> {
+    return this.http.get<Outage[]>(`${this.base}/outages`);
   }
 }

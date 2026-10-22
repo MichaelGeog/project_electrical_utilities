@@ -78,3 +78,30 @@ export interface UpdateMeterRequest {
   meterNumber: string;
   status: string;
 }
+
+/** Matches ServiceRequestDto from the API. */
+export interface ServiceRequest {
+  id: string;
+  customerId: string;
+  accountNumber: string;
+  customerName: string;
+  type: string;
+  description: string;
+  status: 'Open' | 'In Progress' | 'Resolved';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateServiceRequest {
+  type: string;
+  description: string;
+}
+
+/** Simulated outage numbers for one region. */
+export interface Outage {
+  region: string;
+  customersTracked: number;
+  customersOut: number;
+  percentOut: number;
+  updatedAt: string;
+}

@@ -24,10 +24,15 @@ form.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
 .field small.error { position: absolute; left: 0; bottom: 0; font-size: .8rem; line-height: 1.2; }
 /* Buttons in a form row line up with the inputs, not with the reserved error space. */
 form.row > button, .row > button { margin-bottom: 1.3em; }
-input, select { padding: 9px; border: 1px solid #c5ccd6; border-radius: 6px; font-size: 1rem; background: #fff; }
+input, select, textarea { padding: 9px; border: 1px solid #c5ccd6; border-radius: 6px; font-size: 1rem; background: #fff; }
 button.primary { padding: 10px 16px; border: 0; border-radius: 6px; background: #1f5fbf; color: #fff; font-size: 1rem; cursor: pointer; }
 button.primary:disabled { opacity: .6; cursor: default; }
 
 .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .8rem; background: #e3e7ee; }
 .badge.paid { background: #d6f1df; color: #1b7a3e; }
 .badge.unpaid { background: #fde3c8; color: #8a4b00; }
+
+textarea { font-family: inherit; width: 100%; min-height: 90px; resize: vertical; }
+td button { padding: 4px 10px; border: 1px solid #c5ccd6; border-radius: 6px; background: #fff; cursor: pointer; }
+.badge.progress { background: #dbe7fb; color: #1f4f9f; }
+.field.wide { flex: 1 1 100%; }
